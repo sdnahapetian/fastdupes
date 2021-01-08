@@ -599,15 +599,16 @@ def main():
                      opts.dry_run)
     else:
         tsize = 0
+        diffsize = 0
         for dupeSet in groups.values():
-            dssize = 0
-            for file in dupeSet:
-                dssize += _stat(file).st_size
+            dssize = _stat(list(dupeSet)[0]).st_size * len(dupeSet)
+            diffsize += dssize / len(dupeSet)
             tsize += dssize
             print '\n'.join(dupeSet)
             print sizeof_fmt(dssize)
             print '\n'
-        print sizeof_fmt(tsize)
+        print "Total Size of Files : " + sizeof_fmt(tsize)
+        print "Potential Space Save: " + sizeof_fmt(tsize - diffsize)
 
 if __name__ == '__main__':
     main()
