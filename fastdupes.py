@@ -598,8 +598,16 @@ def main():
         delete_dupes(groups, opts.prefer, not opts.noninteractive,
                      opts.dry_run)
     else:
+        tsize = 0
         for dupeSet in groups.values():
-            print '\n'.join(dupeSet) + '\n'
+            dssize = 0
+            for file in dupeSet:
+                dssize += _stat(file).st_size
+            tsize += dssize
+            print '\n'.join(dupeSet)
+            print sizeof_fmt(dssize)
+            print '\n'
+        print sizeof_fmt(tsize)
 
 if __name__ == '__main__':
     main()
