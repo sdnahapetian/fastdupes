@@ -533,6 +533,12 @@ def delete_dupes(groups, prefer_list=None, interactive=True, dry_run=False):
             print "Removing %s" % path
             if not dry_run:
                 os.remove(path)
+def sizeof_fmt(num, suffix='B'):
+    for unit in ['','Ki','Mi','Gi','Ti','Pi','Ei','Zi']:
+        if abs(num) < 1024.0:
+            return "%3.1f%s%s" % (num, unit, suffix)
+        num /= 1024.0
+    return "%.1f%s%s" % (num, 'Yi', suffix)
 
 def main():
     """The main entry point, compatible with setuptools."""
